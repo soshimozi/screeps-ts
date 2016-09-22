@@ -1,3 +1,13 @@
+export enum RoleType {
+    MultiRole,
+    Worker,
+    Courier,
+    Miner,
+    Burrower,
+    Carrier,
+    Extractor
+}
+
 export enum TaskType {
     Combat,
     Work,
@@ -9,7 +19,7 @@ export enum TaskType {
     Wait
 }
 
-enum TaskSubType {
+export enum TaskSubType {
     Pickup,
     Withdraw,
     Deposit,
@@ -23,12 +33,12 @@ enum TaskSubType {
     Wait
 }
 
-enum StructureType {
+export enum StructureType {
     Link,
     Storage
 }
 
-enum ResourceType {
+export enum ResourceType {
     Energy,
     Mineral
 }

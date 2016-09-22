@@ -3,6 +3,9 @@
 
 import {Task} from "./task";
 import {TaskType} from "./task";
+import {RoleType} from "./task";
+import {TaskSubType} from "./task";
+import {ResourceType} from "./task";
 import {Hive} from "./hive";
 import {CreepUtil} from "./creep-util";
 
@@ -70,6 +73,83 @@ export namespace TaskManager {
 			 	return;
 			 }
 		}
+
+        let role : RoleType = creep.memory.role;
+        switch(role) {
+            default:
+                return;
+
+            case RoleType.Worker:
+            case RoleType.MultiRole:
+                this.assignTask_Work(creep, isRefueling);
+                break;
+
+            case RoleType.Courier:
+                this.assignTask_Industry(creep, isRefueling);
+                break;
+
+            case RoleType.Miner:
+            case RoleType.Carrier:
+            case RoleType.Burrower:
+                this.assignTask_Mining(creep, isRefueling);
+                break;
+
+            case RoleType.Extractor:
+                this.assignTask_Extract(creep, isRefueling);
+                break;
+        }
+    }
+
+    export function assignTask_Work(creep: Creep, isRefueling: boolean) : void {
+        let task : Task;
+        let roomTasks : Task[] = Memory["rooms"][creep.room.name]["tasks"];
+
+        if (isRefueling) {   
+
+            task = _.head(
+                _.sortBy(_.sortBy(_.filter(roomTasks, t => { return t.Type == TaskType.Energy && (t.Creeps == null || t.Creeps > 0)}),
+                            t => { return creep.pos.getRangeTo(t.Pos.x, t.Pos.y)}), 
+                            t => { return t.Priority }));
+            
+            if (task != null) {
+				this.giveTask(creep, task);
+                return;
+            }
+                        
+            task = _.head(_.sortBy(_.filter(roomTasks, 
+                    t => { return t.SubType == TaskSubType.Pickup && t.Resource == ResourceType.Energy && (t.Creeps == null || t.Creeps > 0); }), 
+                    t => { return creep.pos.getRangeTo(t.Pos.x, t.Pos.y); }));
+            
+            if (task != null) {
+				this.giveTask(creep, task);
+                return;
+            }
+
+            task = _.head(_.sortBy(_.filter(roomTasks, 
+                    t => { return t.Type == TaskType.Mine && t.Resource == ResourceType.Energy && (t.Creeps == null || t.Creeps > 0); }), 
+                    t => { return creep.pos.getRangeTo(t.Pos.x, t.Pos.y); }));
+
+            if (task != null) {
+				this.giveTask(creep, task);
+                return;
+            }        
+        }         
+    }
+
+    export function assignTask_Industry(creep: Creep, isRefueling: boolean) : void {
+        
+    }
+
+    export function assignTask_Mine(creep: Creep, isRefueling: boolean) : void {
+        
+    }
+
+    export function assignTask_Extract(creep: Creep, isRefueling: boolean) : void {
+        
+    }            
+
+    export function compileTasks(rmName: string) : void {
+
     }
         
 }
