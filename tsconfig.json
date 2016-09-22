@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "noResolve": false,
+    "noImplicitAny": false
+  },
+  "compileOnSave": false,
+  "exclude": [
+    "dist",
+    "node_modules",
+    "libs"
+  ],
+  "filesGlob": [
+    "typings/**/*.d.ts",
+    "src/**/*.ts"
+  ],
+  "files": ["./typings/globals/lodash/index.d.ts", 
+            "./typings/globals/screeps/index.d.ts", 
+            "./typings/index.d.ts", 
+            "./src/task.ts",
+            "./src/hive.ts",
+            "./src/game-manager.ts",
+            "./src/task-manager.ts",
+            "./src/creep-util.ts",
+            "./src/main.ts"
+            ]
+}
