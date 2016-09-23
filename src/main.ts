@@ -1,6 +1,4 @@
 import {GameManager} from './game-manager';
-import {Task} from './task';
-import {TaskType} from './task';
 
 declare var module: any;
 
@@ -10,9 +8,6 @@ declare var module: any;
 GameManager.globalBootstrap();
 
 module.exports.loop = function() {
-
-    let t : Task = new Task();
-    t.Type = TaskType.Industry;
 
 
     // create sites here
